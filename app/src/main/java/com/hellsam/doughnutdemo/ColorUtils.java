@@ -1,56 +1,39 @@
 package com.hellsam.doughnutdemo;
 
 import android.graphics.Color;
-import android.util.Log;
-
-import java.util.Arrays;
 
 /**
  * Created by hellsam on 15/12/17.
  */
 public class ColorUtils {
     /**
+     * 颜色渐变算法
      * 获取某个百分比下的渐变颜色值
-     * @param precent
+     *
+     * @param percent
      * @param colors
      * @return
      */
-    public static int getCurrentColor(float precent, int[] colors){
+    public static int getCurrentColor(float percent, int[] colors) {
         float[][] f = new float[colors.length][3];
-        for(int i=0;i<colors.length;i++){
-            int red = (colors[i] & 0xff0000) >> 16;
-            int green = (colors[i] & 0x00ff00) >> 8;
-            int blue = (colors[i] & 0x0000ff);
-            f[i][0] = red;
-            f[i][1] = green;
-            f[i][2] = blue;
+        for (int i = 0; i < colors.length; i++) {
+            f[i][0] = (colors[i] & 0xff0000) >> 16;
+            f[i][1] = (colors[i] & 0x00ff00) >> 8;
+            f[i][2] = (colors[i] & 0x0000ff);
         }
         float[] result = new float[3];
-//        for(int i=0;i<3;i++){
-//            if(precent < 0.5f){
-//                result[i] = f[0][i] - (f[0][i] - f[1][i])*precent;
-//            }else if(precent == 0.5f){
-//                result[i] = f[1][i];
-//            }else if(precent > 0.5f){
-//                result[i] = f[1][i] - (f[1][i] - f[2][i])*precent;
-//            }
-//        }
-        if(precent < 0.5f){
-            result[0] = 255f*precent*2;
-            result[1] = 255;
-            result[2] = 0;
-        }else if(precent == 0.5f){
-            result[0] = 255;
-            result[1] = 255;
-            result[2] = 0;
-        }else if(precent > 0.5f){
-            result[0] = 255;
-            result[1] = 255 - 255f*precent*2;
-            result[2] = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < f.length; j++) {
+                if (f.length == 1 || percent == j / (f.length - 1f)) {
+                    result = f[j];
+                } else {
+                    if (percent > j / (f.length - 1f) && percent < (j + 1f) / (f.length - 1)) {
+                        result[i] = f[j][i] - (f[j][i] - f[j + 1][i]) * (percent - j / (f.length - 1f)) * (f.length - 1f);
+                    }
+                }
+            }
         }
-        Log.e("TAG", Arrays.toString(result));
-        Log.e("TAG", Color.rgb((int) result[0], (int) result[1], (int)result[2]) + "");
-        return Color.rgb((int) result[0], (int) result[1], (int)result[2]);
+        return Color.rgb((int) result[0], (int) result[1], (int) result[2]);
     }
 
 }

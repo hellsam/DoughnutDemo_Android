@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.p20Btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doughnutView.setValue(360 * 0.2f);
+                doughnutView.setValue(360 * 0.25f);
             }
         });
         findViewById(R.id.p50Btn).setOnClickListener(new View.OnClickListener() {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.p80Btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doughnutView.setValue(360 * 0.8f);
+                doughnutView.setValue(360 * 0.75f);
             }
         });
         findViewById(R.id.p100Btn).setOnClickListener(new View.OnClickListener() {

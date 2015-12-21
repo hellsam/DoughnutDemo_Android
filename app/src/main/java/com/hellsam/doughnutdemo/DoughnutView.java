@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import android.graphics.SweepGradient;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Interpolator;
 
 /**
  * Created by hellsam on 15/12/16.
@@ -48,6 +49,13 @@ public class DoughnutView extends View {
 
     public void setValue(float value) {
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(currentValue, value);
+        valueAnimator.setDuration(300);
+        valueAnimator.setInterpolator(new Interpolator() {
+            @Override
+            public float getInterpolation(float v) {
+                return 1-(1-v)*(1-v)*(1-v);
+            }
+        });
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
